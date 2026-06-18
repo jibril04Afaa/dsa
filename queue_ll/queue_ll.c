@@ -9,63 +9,45 @@ void init_queue(Queue* q)
     q->rear = NULL;
 }
 
-bool is_empty(Queue* q)
+int is_empty(Queue* q)
 {
-    if(q->front == NULL)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    return q->front == NULL;
 }
 
 void enqueue(Queue* q, int data)
 {
-    // create a new node
+    // create new node
     Node* new_node = malloc(sizeof(Node));
+
+    if (new_node == NULL)
+    {
+        printf("Allocation failed! \n");
+        return;
+    }
     new_node->data = data;
     new_node->next = NULL;
 
-    /* add new node */
-    // when queue is empty, both front and back become the new node
+    // check if queue is empty
     if (is_empty(q))
     {
+        // the front and back become the same node 
         q->front = new_node;
         q->rear = new_node;
     }
+
+    // attach to rear
     else
     {
-        /* if not empty, add new node to the back & update rear */
-        q->front->next = new_node;
-        q->rear = new_node;
-    }   
+       q->rear->next = new_node;
+       q->rear = new_node;
+    }
+
 }
-
-
 int dequeue(Queue* q);
 int peek(Queue* q);
-void print_queue(Queue* q)
-{
-    while (q->rear != NULL)
-    {
-        // traverse queue from the rear
-        printf("%d->", q->rear);
-    }
-    
-}
+void print_queue(Queue* q);
 
 int main()
 {
-    printf("Queue: \n");
-
-    Queue main_q;
-    init_queue(&main_q);
-    enqueue(&main_q, 7);
-    enqueue(&main_q, 8);
-
-    print_queue(&main_q);
-
     return 0;
 }
