@@ -17,9 +17,9 @@ size_t my_strlen(char* my_string)
 int main()
 {
     char* s = "hello world";
-    printf("strlen(s): %d\n", strlen(s));
+    printf("strlen(s): %ld\n", strlen(s));
 
-    printf("my_strlen(s): %d\n", my_strlen(s));
+    printf("my_strlen(s): %ld\n", my_strlen(s));
 
     return 0;
 }
