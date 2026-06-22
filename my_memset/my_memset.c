@@ -10,7 +10,7 @@ void* my_memset(void* ptr, int value, size_t num)
    unsigned char* p = (void*)ptr; // cast to unsigned char* so we can modify *ptr
    for (size_t i = 0; i < num; i++)
    {
-        // set *ptr to value, whil
+        // set *ptr to value
         *p = value;
         p++; // move the pointer to capture (size_t num) number of bytes
    }

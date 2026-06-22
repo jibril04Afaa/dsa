@@ -19,7 +19,7 @@ void init_queue(Queue* q);
 bool is_empty(Queue* q);
 void enqueue(Queue* q, int data); // add an element to the rear
 int dequeue(Queue* q); // removes an element from the front
-int peek(Queue* q);
+int peek(Queue* q); // returns the front value
 void print_queue(Queue* q);
 
 #endif
