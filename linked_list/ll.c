@@ -15,16 +15,6 @@ Node* create_node(int data)
     return new_node;
 }
 
-void free_list(Node* head)
-{
-    while (head != NULL)
-    {
-        // free the data
-        free(head);
-    }
-    
-}
-
 Node* insert_front(Node* head, int data)
 {
     // create a new node to add
@@ -67,6 +57,37 @@ void print_list(Node* head)
     }
 }
 
+void free_list(Node* head)
+{
+    while (head != NULL)
+    {
+        Node* temp = head; // save the next pointer before freeing
+        head = head->next; // move the pointer along the list
+        free(temp);
+    }   
+}
+
+Node* reverse_list(Node* head)
+{
+    Node* prev = NULL;
+    Node* curr = head;
+    Node* next = NULL;
+
+    // check that head exists
+    while (curr != NULL)
+    {
+        next = curr->next; // fill in the NULL next ptr to the head's (curr) next ptr
+        curr->next = prev; // reverse LL's order
+
+        /* even out the odds */
+        prev = curr; // set prev to curr
+        curr = next;
+    }
+
+    return prev; // prev is the new head after reversal
+}
+
+
 int main()
 {
     /* driver code*/
@@ -82,6 +103,11 @@ int main()
     head = insert_front(head, 67);
     head = delete_front(head);
 
+    print_list(head);
+
+    head = reverse_list(head);
+
+    printf("\n Reversed: ");
     print_list(head);
 
     return 0;
