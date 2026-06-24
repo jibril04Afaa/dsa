@@ -2,38 +2,87 @@
 #include <stdlib.h>
 #include "ll.h"
 
-Node_t* create_node(int data)
+Node* create_node(int data)
 {
-    Node_t* node = malloc(sizeof(Node_t));
-    if (!node) perror("Error! no node made");
-    node->data = data;
-    node->next = NULL;
+    Node* new_node = malloc(sizeof(Node));
+
+    // malloc error check
+    if (!new_node) perror("Failed to allocate");
+
+    new_node->data = data;
+    new_node->next = NULL;
+
+    return new_node;
 }
 
-void print_list(Node_t* head)
+void free_list(Node* head)
 {
-    while(head != NULL)
+    while (head != NULL)
     {
-        printf("%d->", head->data);
+        // free the data
+        free(head);
+    }
+    
+}
+
+Node* insert_front(Node* head, int data)
+{
+    // create a new node to add
+    Node* to_add = create_node(data);
+
+    /* point the new node's next to the current head*/
+    to_add->next = head;
+
+    return to_add;
+}
+
+Node* delete_front(Node* head)
+{
+    // verify list's emptiness
+    if (head == NULL) perror("Cannot delete front");
+
+    /* create a temp variable for head, because when we move 
+    the pointer to the next node in the list, the previous 
+    node will be sitting in memory with no pointer attached.*/
+    Node* temp = head;
+
+    // move the current head to the next 
+    head = head->next;
+
+    // finally, free the pointer for the old head
+    free(temp);
+
+    return head;
+}
+
+void print_list(Node* head)
+{
+    // start from head and print as long as head exists
+    while (head != NULL)
+    {
+        printf("->%d", head->data);
+
+        // move the pointer forward
         head = head->next;
     }
 }
 
-Node_t* insert_front(Node_t* head, int data)
-{
-    // create new node
-    Node_t* new_node = create_node(data);
-
-    // check if head exists
-    if (!head) perror("Error!");
-    
-}
-
 int main()
 {
-    Node_t* first_node = create_node(10);
-    first_node->next = create_node(20);
-    first_node->next->next = create_node(30);
+    /* driver code*/
+    Node* head = create_node(10);
 
-    print_list(first_node);
+    head->next = create_node(20);
+    head->next->next = create_node(30);
+    head->next->next->next = create_node(40);
+    head->next->next->next->next = create_node(50);
+    head->next->next->next->next->next = create_node(60);
+    head->next->next->next->next->next->next = create_node(70);
+
+    head = insert_front(head, 67);
+    head = delete_front(head);
+
+    print_list(head);
+
+    return 0;
 }
