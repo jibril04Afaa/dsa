@@ -41,7 +41,12 @@ int ring_buf_write(RingBuffer* rb, uint8_t data)
 
 int ring_buf_read(RingBuffer* rb, uint8_t* data)
 {
-    if (ring_buf_empty(rb) == 1) return 0;
+    if (ring_buf_empty(rb)) return 0;
+    *data = rb->buf[rb->head];
+
+    // advance the ptr, taking note of the wrap around logic
+    rb->head = (rb->head + 1) % RING_BUF_SIZE;
+    return 1;
 }
 
 int main()
